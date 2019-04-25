@@ -23,3 +23,16 @@ Points to consider:
 - how do you guarantee that concurrent writes and reads do not cause inconsistencies in your queries? this is important. consider the performance impacts.
 - use Spring Boot to speed up your development
 - write up a half­page/page with bullet points about what decisions you took and why
+
+# Bullet poins
+
+I made decision use jgrapht library for solve this task because I don't have deep knowledge in graph theory. Also it's very common problem as I see in google.
+
+For finding all routes between two cities I'm using KShortestSimplePaths class. 
+The algorithm inside determines the k shortest simple paths in increasing order of weight. 
+The algorithm is a variant of the Bellman-Ford algorithm but instead of only storing the best path it stores the "k" best paths at each pass, yielding a complexity of $O(k \cdot n \cdot * (m^2))$ where $m$ is the number of edges and $n$ is the number of vertices.
+
+Before start searching of all paths I do the copy of main graph and do the search on copy.
+Also I made method for adding cities in graph synchronized
+
+For increasing search performance we can organize some cache with calculated answers. For example we can use ConcurrentHashMap with several versions of graphs and cached answers for them.  
